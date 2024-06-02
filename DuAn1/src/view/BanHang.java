@@ -218,7 +218,14 @@ public class BanHang extends javax.swing.JPanel {
 
         model.setRowCount(0);
 
-        List<SanPhamChiTiet> list = chiTietSpService.getAll();
+        List<SanPhamChiTiet> list = new ArrayList<>();
+        
+        if(txtSpSearch1.getText().trim().isEmpty()){
+            list = chiTietSpService.getAll();
+        }else{
+            String tenSearch = txtSpSearch1.getText();
+            list = chiTietSpService.Search(tenSearch);
+        }
 
         int stt = 1;
 
@@ -1051,7 +1058,7 @@ public class BanHang extends javax.swing.JPanel {
     }//GEN-LAST:event_txtSpSearch1ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-
+        loadTableSpCt();
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void cbo_filterThuongHieu1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbo_filterThuongHieu1ItemStateChanged
@@ -1229,9 +1236,21 @@ public class BanHang extends javax.swing.JPanel {
                 for (int i = 0; i < hoaDonCTService.getAllHDCTByIdHD(idHD).size(); i++) {
                 for(int z = 0 ; z < chiTietSpService.getAll().size() ; z ++){
                     if(hoaDonCTService.getAllHDCTByIdHD(idHD).get(i).getHaoDon().getId().equals(idHD)){
-                        if(chiTietSpService.getAll().get(z).getId().equals(hoaDonCTService.getAllHDCT().get(i).getSanPham().getId())){
+//                            System.out.println(chiTietSpService.getAll().get(z).getId());
+//                            System.out.println(hoaDonCTService.getAllHDCT().get(i).getSanPham().getId());
+                        if(hoaDonCTService.getAllHDCTByIdHD(idHD).get(i).getSanPham().getId().equals(chiTietSpService.getAll().get(z).getId())){
+//                            System.out.println("-----");
+//                            System.out.println(hoaDonCTService.getAllHDCTByIdHD(idHD).get(i).getSanPham().getId());
+//                            System.out.println("-----");
                         int soLuongMoi = hoaDonCTService.getAllHDCTByIdHD(idHD).get(i).getSoluong() + chiTietSpService.getAll().get(z).getSoLuongTon();
-                        chiTietSpService.updateSoLuongSPCT(soLuongMoi, Integer.valueOf(hoaDonCTService.getAllHDCT().get(i).getSanPham().getId()));
+                        chiTietSpService.updateSoLuongSPCT(soLuongMoi, Integer.valueOf(chiTietSpService.getAll2().get(z).getId()));
+                            
+//                            System.out.println(hoaDonCTService.getAllHDCTByIdHD(idHD).get(i).getSanPham().getId());
+//                            System.out.println(chiTietSpService.getAll2().get(z).getId()));
+//                            
+//                            System.out.println(hoaDonCTService.getAllHDCTByIdHD(idHD).get(i).getSoluong());
+//                            System.out.println(chiTietSpService.getAll2().get(z).getSoLuongTon());
+//                            System.out.println(soLuongMoi);
                         check = true;
                         }
                     }
@@ -1259,7 +1278,7 @@ public class BanHang extends javax.swing.JPanel {
             lbl_tienPhaitra1.setText("");
             lbl_nguoiTao.setText("");
         }else{
-            JOptionPane.showMessageDialog(this, "Xóa thát bại");
+            JOptionPane.showMessageDialog(this, "Xóa thất bại");
         }
 
     }//GEN-LAST:event_jButton13ActionPerformed
