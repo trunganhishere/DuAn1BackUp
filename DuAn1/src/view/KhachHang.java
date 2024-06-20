@@ -759,7 +759,7 @@ public class KhachHang extends javax.swing.JPanel {
                 cell.setCellValue(tk.getTen());
 
                 cell = row.createCell(2, CellType.STRING);
-                cell.setCellValue(tk.getNgaysinh());
+                cell.setCellValue(tk.getNgaysinh().toString());
 
                 cell = row.createCell(3, CellType.STRING);
                 cell.setCellValue(tk.isGioitinh()? "Nam" : "Nữ");
